@@ -7,10 +7,12 @@ export default function Shelf({ name, books }) {
             <h2 className="bookshelf-title">{shelf[name]}</h2>
             <div className="bookshelf-books">
                 <ol className="books-grid">
-                    {books.forEach((book) => {
-                        <li>
-                            <Book book={book} />
-                        </li>
+                    {books.map((book) => {
+                        return (
+                            <li key={book.id}>
+                                <Book book={book} />
+                            </li>
+                        );
                     })}
                 </ol>
             </div>
