@@ -1,17 +1,34 @@
+import { useEffect, useState } from "react";
 import "./App.css";
-import { useState } from "react";
 import BookList from "./BookList";
 import BookSearch from "./BookSearch";
+import { getAll } from "./BooksAPI";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
+  const [books, setBooks] = useState([]);
+
+  function getBooks() {
+    getAll().then((data) => {
+      setBooks(data);
+    }).catch((error) => {
+      console.log("Get books error: " + error);
+    });
+  }
+
+  useEffect(() => {
+    getBooks();
+  }, []);
 
   return (
     <div className="app">
       {showSearchPage ? (
-        <BookSearch onClose={() => setShowSearchpage(false)} />
+        <BookSearch onClose={() => {
+          getBooks();
+          setShowSearchpage(false)
+        }} />
       ) : (
-        <BookList onAddBook={() => {
+        <BookList books={books} onAddBook={() => {
           setShowSearchpage(true);
         }} />
       )}

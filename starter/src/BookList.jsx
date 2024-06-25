@@ -1,22 +1,10 @@
-import { useEffect, useState } from "react";
-import { getAll } from "./BooksAPI";
 import Shelf from "./Shelf";
 
-export default function BookList({ onAddBook }) {
-
-    const [books, setBooks] = useState([]);
+export default function BookList({ books, onAddBook }) {
 
     const currentlyReading = books.filter((b) => b.shelf === "currentlyReading");
     const wantToRead = books.filter((b) => b.shelf === "wantToRead");
     const read = books.filter((b) => b.shelf === "read");
-
-    useEffect(() => {
-        getAll().then((data) => {
-            setBooks(data);
-        }).catch((error) => {
-            console.log("Get books error: " + error);
-        });
-    }, []);
 
     return (
         <div className="list-books">
