@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import "./App.css";
 import BookList from "./BookList";
 import BookSearch from "./BookSearch";
@@ -7,20 +7,6 @@ import { getAll } from "./BooksAPI";
 
 function App() {
   const [books, setBooks] = useState([]);
-
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <BookList
-        books={books}
-        onBookUpdated={() => getBooks()}
-      />
-    },
-    {
-      path: '/search',
-      element: <BookSearch currentBooks={books} />
-    }
-  ]);
 
   function getBooks() {
     getAll().then((data) => {
@@ -30,13 +16,27 @@ function App() {
     });
   }
 
+  const location = useLocation()
+
   useEffect(() => {
-    getBooks();
-  }, []);
+    if (location.pathname === '/') {
+      getBooks();
+    }
+  }, [location]);
 
   return (
     <div className="app">
-      <RouterProvider router={router} />
+      <Routes>
+        <Route
+          path="/"
+          element={<BookList
+            books={books}
+            onBookUpdated={() => getBooks()}
+          />} />
+        <Route
+          path="/search"
+          element={<BookSearch currentBooks={books} />} />
+      </Routes>
     </div>
   );
 }
