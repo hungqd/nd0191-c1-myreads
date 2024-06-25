@@ -1,5 +1,5 @@
 import { update } from "./BooksAPI";
-import { shelf } from "./Constants";
+import { allShelfes } from "./Constants";
 
 export default function Book({ book, onUpdated }) {
 
@@ -13,6 +13,8 @@ export default function Book({ book, onUpdated }) {
         });
     }
 
+    const shelf = book.shelf ? book.shelf : 'none';
+
     return (
         <div className="book">
             <div className="book-top">
@@ -25,16 +27,16 @@ export default function Book({ book, onUpdated }) {
                     }}
                 ></div>
                 <div className="book-shelf-changer">
-                    <select value={book.shelf ? book.shelf : 'none'} onChange={onChangeShelf}>
+                    <select value={shelf} onChange={onChangeShelf}>
                         <option disabled>
                             Move to...
                         </option>
-                        {Object.entries(shelf).map(([key, value]) => {
+                        {Object.entries(allShelfes).map(([key, value]) => {
                             return (
                                 <option
                                     key={key}
                                     value={key}
-                                    disabled={key === book.shelf}>
+                                    disabled={key === shelf}>
                                     {value}
                                 </option>
                             );
