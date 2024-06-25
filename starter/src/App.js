@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="app">
       {showSearchPage ? (
-        <BookSearch onClose={() => {
+        <BookSearch currentBooks={books} onClose={() => {
           getBooks();
           setShowSearchpage(false)
         }} />

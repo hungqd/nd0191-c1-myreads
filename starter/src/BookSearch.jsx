@@ -4,11 +4,16 @@ import { debounceTime } from 'rxjs/operators';
 import Book from "./Book";
 import { search } from "./BooksAPI";
 
-export default function BookSearch({ onClose }) {
+export default function BookSearch({ currentBooks, onClose }) {
 
     const [books, setBooks] = useState([]);
 
     const querySubject = new Subject();
+
+    const [bookShelf, setBookShelf] = useState(currentBooks.reduce((map, book) => {
+        map[book.id] = book.shelf;
+        return map;
+    }, {}));
 
     useEffect(() => {
         querySubject.pipe(debounceTime(300)).subscribe((value) => {
@@ -17,7 +22,9 @@ export default function BookSearch({ onClose }) {
                 return;
             }
             search(value, 10).then((books) => {
-                setBooks(books);
+                setBooks(books.map((book) => {
+                    return Object.assign({}, book, { shelf: bookShelf[book.id] });
+                }));
             }).catch((e) => {
                 console.log('Search error', e);
                 setBooks([]);
@@ -34,6 +41,7 @@ export default function BookSearch({ onClose }) {
     }
 
     function onBookUpdated(book, shelf) {
+        setBookShelf(Object.assign({}, bookShelf, { [book.id]: shelf }));
         setBooks(books.map((b) => {
             return b.id === book.id ? Object.assign({}, b, { shelf }) : b;
         }));
