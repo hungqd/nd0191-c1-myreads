@@ -1,6 +1,6 @@
 import Shelf from "./Shelf";
 
-export default function BookList({ books, onAddBook }) {
+export default function BookList({ books, onAddBook, onBookUpdated }) {
 
     const currentlyReading = books.filter((b) => b.shelf === "currentlyReading");
     const wantToRead = books.filter((b) => b.shelf === "wantToRead");
@@ -17,18 +17,21 @@ export default function BookList({ books, onAddBook }) {
                         currentlyReading.length > 0 && <Shelf
                             name={'currentlyReading'}
                             books={currentlyReading}
+                            onBookUpdated={onBookUpdated}
                         />
                     }
                     {
                         wantToRead.length > 0 && <Shelf
                             name={'wantToRead'}
                             books={wantToRead}
+                            onBookUpdated={onBookUpdated}
                         />
                     }
                     {
                         read.length > 0 && <Shelf
                             name={'read'}
                             books={read}
+                            onBookUpdated={onBookUpdated}
                         />
                     }
                 </div>

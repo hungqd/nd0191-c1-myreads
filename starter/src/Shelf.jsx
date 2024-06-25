@@ -1,7 +1,7 @@
 import Book from "./Book";
 import { shelf } from "./Constants";
 
-export default function Shelf({ name, books }) {
+export default function Shelf({ name, books, onBookUpdated }) {
     return (
         <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf[name]}</h2>
@@ -10,7 +10,7 @@ export default function Shelf({ name, books }) {
                     {books.map((book) => {
                         return (
                             <li key={book.id}>
-                                <Book book={book} />
+                                <Book book={book} onUpdated={onBookUpdated} />
                             </li>
                         );
                     })}

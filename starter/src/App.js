@@ -30,7 +30,8 @@ function App() {
       ) : (
         <BookList books={books} onAddBook={() => {
           setShowSearchpage(true);
-        }} />
+        }}
+          onBookUpdated={() => getBooks()} />
       )}
     </div>
   );
