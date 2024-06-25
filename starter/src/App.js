@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import "./App.css";
 import BookList from "./BookList";
 import BookSearch from "./BookSearch";
 import { getAll } from "./BooksAPI";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
   const [books, setBooks] = useState([]);
+
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <BookList
+        books={books}
+        onBookUpdated={() => getBooks()}
+      />
+    },
+    {
+      path: '/search',
+      element: <BookSearch currentBooks={books} />
+    }
+  ]);
 
   function getBooks() {
     getAll().then((data) => {
@@ -22,17 +36,7 @@ function App() {
 
   return (
     <div className="app">
-      {showSearchPage ? (
-        <BookSearch currentBooks={books} onClose={() => {
-          getBooks();
-          setShowSearchpage(false)
-        }} />
-      ) : (
-        <BookList books={books} onAddBook={() => {
-          setShowSearchpage(true);
-        }}
-          onBookUpdated={() => getBooks()} />
-      )}
+      <RouterProvider router={router} />
     </div>
   );
 }

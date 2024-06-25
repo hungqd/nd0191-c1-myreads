@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import Book from "./Book";
 import { search } from "./BooksAPI";
 
-export default function BookSearch({ currentBooks, onClose }) {
+export default function BookSearch({ currentBooks }) {
 
   const [books, setBooks] = useState([]);
 
@@ -50,13 +51,11 @@ export default function BookSearch({ currentBooks, onClose }) {
   return (
     <div className="search-books">
       <div className="search-books-bar">
-        <a
-          href="!#"
+        <Link
           className="close-search"
-          onClick={onClose}
-        >
-          Close
-        </a>
+          to=".."
+          relative="path"
+        >Close</Link>
         <div className="search-books-input-wrapper">
           <input
             type="text"

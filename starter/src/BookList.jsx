@@ -1,6 +1,7 @@
 import Shelf from "./Shelf";
+import { Link } from 'react-router-dom';
 
-export default function BookList({ books, onAddBook, onBookUpdated }) {
+export default function BookList({ books, onBookUpdated }) {
 
   const currentlyReading = books.filter((b) => b.shelf === "currentlyReading");
   const wantToRead = books.filter((b) => b.shelf === "wantToRead");
@@ -36,7 +37,7 @@ export default function BookList({ books, onAddBook, onBookUpdated }) {
           }
         </div>
         <div className="open-search">
-          <a href="!#" onClick={onAddBook}>Add a book</a>
+          <Link to={'/search'}>Add a book</Link>
         </div>
       </div>
     </div>
