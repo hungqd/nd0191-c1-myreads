@@ -26,6 +26,9 @@ importers:
       react-scripts:
         specifier: 4.0.3
         version: 4.0.3(@types/webpack@4.41.38)(eslint@7.32.0)(react@17.0.2)(sockjs-client@1.6.1)(typescript@4.9.5)
+      rxjs:
+        specifier: ^7.8.1
+        version: 7.8.1
       web-vitals:
         specifier: ^1.1.2
         version: 1.1.2
@@ -5217,6 +5220,9 @@ packages:
 
   run-queue@1.0.3:
     resolution: {integrity: sha512-ntymy489o0/QQplUDnpYAYUsO50K9SBrIVaKCWDOJzYJts0f9WH9RFJkyagebkw5+y1oi00R7ynNW/d12GBumg==}
+
+  rxjs@7.8.1:
+    resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
 
   safe-array-concat@1.1.2:
     resolution: {integrity: sha512-vj6RsCsWBCf19jIeHEfkRMw8DPiBb+DMXklQ/1SGDHOMlHdPUkZXFQ2YdplS23zESTijAcurb1aSgJA3AgMu1Q==}
@@ -11656,11 +11662,7 @@ snapshots:
       pretty-format: 26.6.2
       throat: 5.0.0
     transitivePeerDependencies:
-      - bufferutil
-      - canvas
       - supports-color
-      - ts-node
-      - utf-8-validate
 
   jest-leak-detector@26.6.2:
     dependencies:
@@ -13692,6 +13694,10 @@ snapshots:
   run-queue@1.0.3:
     dependencies:
       aproba: 1.2.0
+
+  rxjs@7.8.1:
+    dependencies:
+      tslib: 2.6.3
 
   safe-array-concat@1.1.2:
     dependencies:

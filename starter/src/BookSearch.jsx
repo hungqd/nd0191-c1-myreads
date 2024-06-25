@@ -1,21 +1,36 @@
-import { useState } from "react";
-import { search } from "./BooksAPI";
+import { useEffect, useState } from "react";
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import Book from "./Book";
-
+import { search } from "./BooksAPI";
 
 export default function BookSearch({ onClose }) {
 
     const [books, setBooks] = useState([]);
 
+    const querySubject = new Subject();
+
+    useEffect(() => {
+        querySubject.pipe(debounceTime(300)).subscribe((value) => {
+            if (value.length <= 0) {
+                setBooks([]);
+                return;
+            }
+            search(value, 10).then((books) => {
+                setBooks(books);
+            }).catch((e) => {
+                console.log('Search error', e);
+                setBooks([]);
+            });
+        });
+        return () => {
+            querySubject.complete();
+        }
+    });
+
     function onSearch(event) {
         const query = event.target.value.trim();
-        if (query.length > 0) {
-            search(query, 10).then((books) => {
-                setBooks(books);
-            });
-        } else {
-            setBooks([]);
-        }
+        querySubject.next(query);
     }
 
     function onBookUpdated(book, shelf) {
